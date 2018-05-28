@@ -21,3 +21,40 @@
   - name: add nodes
     shell: gluster peer probe {{ item }}
     with_items: "{{ groups['cluster-slaves'] }}"
+
+- hosts: pi-cluster
+  become: true
+  tasks:
+  - name: setup cluster directory
+    file: path=/bricks/brick1/g1 state=directory
+  - name: setup mount directory
+    file: path=/mnt/gluster state=directory owner=pi group=pi
+
+- hosts:  cluster-head
+  become: true
+  tasks:
+  - name: create volume
+    gluster_volume:
+      state: present
+      name: g1
+      bricks: /bricks/brick1/g1
+      rebalance: yes
+      force: true
+      cluster: "{{ groups['pi-cluster'] }}"
+
+  - name: start volume
+    gluster_volume:
+      state: started
+      name: g1
+
+- hosts: pi-cluster
+  become: true
+  tasks:
+  - name: mount gluster volume
+    tags:
+    - mount
+    mount:
+      fstype: glusterfs
+      path: /mnt/gluster
+      src: "{{ groups['cluster-head'][0] }}:/g1"
+      state: mounted
