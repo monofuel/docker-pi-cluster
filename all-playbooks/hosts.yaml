@@ -1,5 +1,5 @@
 ---
-- hosts: pi-cluster
+- hosts: all
   become: true
   tasks:
   - name: "Build hosts file"

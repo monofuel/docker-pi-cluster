@@ -17,3 +17,7 @@ whitemage
 blackmage
 paladin
 machinist
+burtgang ansible_user=monofuel
+
+[desktop]
+burtgang ansible_user=monofuel
