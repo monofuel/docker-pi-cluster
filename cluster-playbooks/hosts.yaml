@@ -1,0 +1,9 @@
+---
+- hosts: pi-cluster
+  become: true
+  tasks:
+  - name: "Build hosts file"
+    blockinfile:
+      dest: /etc/hosts
+      content: "{{ lookup('template', 'hosts.template') }}"
+      state: present

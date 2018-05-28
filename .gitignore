@@ -1,2 +1,6 @@
 log/*
 !log/.gitkeep
+retry/*
+!retry/.gitkeep
+
+.*.swp

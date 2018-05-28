@@ -1,0 +1,23 @@
+---
+- hosts: pi-cluster
+  become: true
+
+  tasks:
+  - name: install package
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+      name: glusterfs-server
+ 
+- hosts: cluster-slaves[0]
+  become: true
+  tasks:
+  - name: start pool
+    shell: gluster peer probe {{ groups['cluster-head'][0] }}
+
+- hosts: cluster-head
+  become: true
+  tasks:
+  - name: add nodes
+    shell: gluster peer probe {{ item }}
+    with_items: "{{ groups['cluster-slaves'] }}"
