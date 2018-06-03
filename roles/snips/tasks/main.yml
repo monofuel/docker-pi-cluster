@@ -1,0 +1,24 @@
+---
+- name: install https transport
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name:  apt-transport-https
+- name: add snips repository
+  apt_repository:
+    repo: deb https://raspbian.snips.ai/stretch stable main
+    state: present
+- name: add snips repo key
+  apt_key:
+    url: https://packagecloud.io/gpg.key
+    state: present
+
+- name: install snips
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - snips-platform-voice
+    - snips-watch
