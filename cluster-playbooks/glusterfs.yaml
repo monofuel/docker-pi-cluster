@@ -8,8 +8,8 @@
       update_cache: yes
       cache_valid_time: 3600
       name: glusterfs-server
- 
-- hosts: cluster-slaves[0]
+
+- hosts: cluster-workers[0]
   become: true
   tasks:
   - name: start pool
@@ -20,7 +20,7 @@
   tasks:
   - name: add nodes
     shell: gluster peer probe {{ item }}
-    with_items: "{{ groups['cluster-slaves'] }}"
+    with_items: "{{ groups['cluster-workers'] }}"
 
 - hosts: pi-cluster
   become: true

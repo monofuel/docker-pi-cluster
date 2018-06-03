@@ -1,0 +1,20 @@
+---
+- name: install package
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: apt-transport-https
+- name: add grafana repository
+  apt_repository:
+    repo: deb https://packagecloud.io/grafana/stable/debian/ stretch main
+    state: present
+- name: add grafana repo key
+  apt_key:
+    url: https://packagecloud.io/gpg.key
+    state: present
+- name: update cache for new repo
+  apt:
+    update_cache: yes
+- name: install grafana
+  apt:
+    name: grafana

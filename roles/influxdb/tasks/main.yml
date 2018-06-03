@@ -1,0 +1,10 @@
+---
+- name: install influxdb
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: influxdb
+- name: Start service influxdb, if not running
+  service:
+    name: influxdb
+    state: started

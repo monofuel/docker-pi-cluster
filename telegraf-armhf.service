@@ -1,0 +1,10 @@
+[Unit]
+Description=Telegraf daemon
+After=network.target
+
+[Service]
+Type=simple
+User=telegraf
+Environment="TELEGRAF_CONFIG_PATH=/opt/telegraf/etc/telegraf.conf"
+ExecStart=/opt/telegraf/usr/bin/telegraf
+Restart=always

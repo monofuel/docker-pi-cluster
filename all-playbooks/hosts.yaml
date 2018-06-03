@@ -7,3 +7,7 @@
       dest: /etc/hosts
       content: "{{ lookup('template', 'hosts.template') }}"
       state: present
+  - name: update hostname
+    copy:
+      dest: /etc/hostname
+      content: "{{ inventory_hostname }}\n"

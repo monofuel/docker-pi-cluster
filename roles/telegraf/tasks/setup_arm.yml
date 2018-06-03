@@ -1,0 +1,25 @@
+---
+- name: setup cluster directory
+  file: path=/opt state=directory
+- name: Unarchive telegraf on arm
+  unarchive:
+    src: https://dl.influxdata.com/telegraf/releases/telegraf-1.6.3_linux_armhf.tar.gz
+    dest: /opt
+    remote_src: yes
+- name: Build config
+  copy:
+    dest: /opt/telegraf/etc/telegraf.conf
+    content: "{{ lookup('template', 'telegraf.template.conf') }}"
+- name: add user
+  user:
+    name: telegraf
+- name: copy service
+  copy:
+    src: ../../telegraf-armhf.service
+    dest: /etc/systemd/system/
+- name: enable service
+  systemd:
+    name: telegraf-armhf
+    enabled: yes
+- name: Make sure a service is running
+  systemd: state=started name=telegraf-armhf

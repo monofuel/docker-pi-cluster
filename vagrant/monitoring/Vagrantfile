@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "grafana" do |box|
+    box.vm.hostname = "grafana"
+    box.ssh.username = 'root'
+    box.ssh.private_key_path = '~/.ssh/id_rsa'
+
+    box.vm.network "forwarded_port", guest: 3000, host: 3000
+
+    box.vm.synced_folder '/mnt/gluster/home/grafana/etc/', '/etc/grafana/'
+    box.vm.synced_folder '/mnt/gluster/home/grafana/var/', '/var/lib/grafana/', user: 472, group: 472
+
+    box.vm.provider :docker do |d|
+      d.build_dir = "../../docker/grafana-arm"
+      d.remains_running = true
+      d.has_ssh = true
+    end
+
+    # box.vm.provision :ansible do |ansible|
+    #  ansible.config_file = "../../ansible.cfg"
+    #  ansible.playbook = "playbook.yml"
+    # end
+
+  end
+  config.vm.define "influxdb" do |box|
+    box.vm.hostname = 'influxdb'
+    box.ssh.username = 'root'
+    box.ssh.private_key_path = '~/.ssh/id_rsa'
+
+    box.vm.network "forwarded_port", guest: 8086, host: 8086
+
+    box.vm.synced_folder '/mnt/gluster/home/influxdb/var/', '/var/lib/influxdb/', user: 107, group: 65534
+
+    box.vm.provider :docker do |d|
+      d.build_dir = "../../docker"
+      d.remains_running = true
+      d.has_ssh = true
+    end
+
+    box.vm.provision :ansible do |ansible|
+      ansible.config_file = "../../ansible.cfg"
+      ansible.playbook = "playbook.yml"
+    end
+
+  end
+end

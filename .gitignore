@@ -4,3 +4,5 @@ retry/*
 !retry/.gitkeep
 
 .*.swp
+.vagrant
+vagrant/monofuel

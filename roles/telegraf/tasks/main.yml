@@ -1,0 +1,14 @@
+---
+- name: install sensors
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: lm-sensors
+- name: detect sensors
+  shell: /usr/sbin/sensors-detect < /dev/null
+- name: setup telegraf on arm
+  include: setup_arm.yml
+  when: ansible_architecture == "armv7l"
+- name: setup telegraf on x86_64
+  include: setup_x86.yml
+  when: ansible_architecture == "x86_64"

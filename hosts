@@ -1,23 +1,31 @@
 [cluster-head]
 whitemage
 
-[cluster-slaves]
+[cluster-workers]
 blackmage
 paladin
 machinist
 
-[pi-cluster]
-whitemage
-blackmage
-paladin
-machinist
+[pi-cluster:children]
+cluster-head
+cluster-workers
 
 [debian]
 whitemage
 blackmage
 paladin
+retropie
 machinist
 burtgang ansible_user=monofuel
 
 [desktop]
 burtgang ansible_user=monofuel
+
+[pigrrl]
+retropie
+
+[docker]
+burtgang
+
+[docker:children]
+pi-cluster

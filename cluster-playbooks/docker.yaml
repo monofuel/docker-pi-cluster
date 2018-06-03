@@ -37,7 +37,7 @@
   - name: get worker token
     shell: docker swarm join-token -q worker
     register: worker_token
-- hosts: cluster-slaves
+- hosts: cluster-workers
   become: true
   tasks:
   - name: join as worker
@@ -45,6 +45,6 @@
     when: "docker_info.stdout.find('Swarm: inactive') != -1"
     retries: 3
     delay: 20
-    
 
-  
+
+

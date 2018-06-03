@@ -17,3 +17,7 @@
       - git
       - fish
       - make
+      - locales # needed for tmux
+# TODO
+# dpkg-reconfigure locales
+# 152 en us utf8
