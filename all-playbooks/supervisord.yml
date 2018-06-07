@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: setup supervisor config directory
+    file: path=/etc/supervisor/conf.d/ state=directory
+  - name: "Build supervisord file"
+    copy:
+      dest: /etc/supervisor/conf.d/supervisord.conf
+      content: "{{ lookup('template', 'supervisord.template.conf') }}"

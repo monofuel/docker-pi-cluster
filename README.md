@@ -24,3 +24,4 @@ cluster-playbooks are for setting up the pi cluster itself. containers or VMs ar
 
 - add vagrantfile to setup gitlab server
 - add snips ai playbook
+- get snips setup with bluetooth speaker?

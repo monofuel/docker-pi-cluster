@@ -1,16 +1,21 @@
 ---
-- name: install https transport
+- name: install stuff
   apt:
     update_cache: yes
     cache_valid_time: 3600
-    name:  apt-transport-https
+    name: "{{item}}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - bluez-tools
+    - pulseaudio
+    - pulseaudio-module-bluetooth
+    - unzip
+- name: add snips repo key
+  shell: apt-key adv --keyserver pgp.surfnet.nl --recv-keys D4F50CDCA10A2849
 - name: add snips repository
   apt_repository:
     repo: deb https://raspbian.snips.ai/stretch stable main
-    state: present
-- name: add snips repo key
-  apt_key:
-    url: https://packagecloud.io/gpg.key
     state: present
 
 - name: install snips
@@ -18,7 +23,22 @@
     name: "{{item}}"
     state: present
     update_cache: yes
-    cache_valid_time: 3600
   with_items:
     - snips-platform-voice
     - snips-watch
+- name: setup dir
+  file: path=/opt/assistant state=directory
+- name: unpack ai
+  unarchive:
+    src: assistant_proj_4AdADPga2dV.zip
+    dest: /opt/assistant
+#- name: unpack hotword
+#  unarchive:
+#    src: hotword.zip
+#    dest: /opt/assistant/hotword
+
+# anker bluetooth speaker/mic
+# A4:77:58:0B:A1:D1
+# TODO connect at container startup
+# - name: connect to speaker
+#  shell: rfcomm connect hci0 A4:77:58:0B:A1:D1

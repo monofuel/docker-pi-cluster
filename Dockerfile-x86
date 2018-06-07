@@ -1,5 +1,5 @@
-FROM arm32v7/debian:stretch
-# FROM debian:stretch
+# FROM arm32v7/debian:stretch
+FROM debian:stretch
 # setup SSH and add our public key to the image
 
 RUN apt-get update
@@ -18,6 +18,7 @@ WORKDIR /root/ansible
 ADD ansible.cfg .
 ADD hosts.yml .
 ADD roles ./roles
+ADD all-playbooks ./all-playbooks
 ARG playbook=debian
 RUN echo [${playbook}] > hosts
 RUN echo localhost ansible_connection=local >> hosts
@@ -25,7 +26,6 @@ RUN mkdir log
 RUN mkdir retry
 
 RUN ansible-playbook hosts.yml
-ADD all-playbooks ./all-playbooks
 RUN ansible-playbook all-playbooks/supervisord.yml
 
 EXPOSE 22

@@ -1,0 +1,8 @@
+---
+- hosts: gitlab
+  become: true
+  environment:
+    EXTERNAL_URL: https://gitlab.japura.net
+  roles:
+    - common
+    - gitlab
