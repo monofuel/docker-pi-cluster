@@ -14,5 +14,10 @@
 - name: install gitlab
   apt:
     name: gitlab-ee
+- name: enable lets encrypt
+  blockinfile:
+    path: /etc/gitlab/gitlab.rb
+    block: |
+      letsencrypt['enable'] = true
 - name: reconfigure gitlab
   shell: gitlab-ctl reconfigure
