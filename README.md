@@ -13,7 +13,7 @@ cluster-playbooks are for setting up the pi cluster itself. containers or VMs ar
 - create docker images
   - create a docker image and run playbook inside container
   - images can then be deployed to a docker swarm
-
+  - I tried using ansible-container, however it doesn't work on arm
 ## Useful Links
 - https://medium.com/@petey5000/monitoring-your-home-network-with-influxdb-on-raspberry-pi-with-docker-78a23559ffea
 - http://jinja.pocoo.org/docs/2.10/templates/
@@ -25,3 +25,12 @@ cluster-playbooks are for setting up the pi cluster itself. containers or VMs ar
 - add vagrantfile to setup gitlab server
 - add snips ai playbook
 - get snips setup with bluetooth speaker?
+
+
+- libvirt deps: qemu-block-extra (for glusterfs, didn't work?) libvirt-daemon libvirt-daemon-system
+
+- lxc
+  - need more stuffs for setup (lxc-net)
+  - apt install redir (For vagrant)
+  - https://github.com/obnoxxx/vagrant-lxc-base-boxes
+    - had to modify ARM to armhf and not arm7

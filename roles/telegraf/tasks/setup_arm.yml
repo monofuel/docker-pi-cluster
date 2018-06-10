@@ -15,7 +15,7 @@
     name: telegraf
 - name: copy service
   copy:
-    src: ../../telegraf-armhf.service
+    src: telegraf-armhf.service
     dest: /etc/systemd/system/
 - name: enable service
   systemd:

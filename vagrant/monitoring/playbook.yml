@@ -1,10 +1,12 @@
 ---
 - hosts: grafana
+  become: true
   roles:
     - common
-    # - grafana // had issues, using custom dockefile instead
+    - grafana
 
 - hosts: influxdb
+  become: true
   roles:
     - common
     - influxdb

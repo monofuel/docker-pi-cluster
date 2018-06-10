@@ -2,10 +2,11 @@
 - hosts: pi-cluster
   become: true
   tasks:
-  - name: update cache
+  - name: install pip
     apt:
       update_cache: yes
       cache_valid_time: 3600
+      name: python-pip
   - name: fetch docker installer
     get_url:
       url: https://get.docker.com
@@ -16,6 +17,14 @@
     - setup
     shell: "/tmp/get-docker.sh"
     register: get_docker
+  - name: start docker
+    service:
+      name: docker
+      enabled: yes
+      state: started
+  - name: install docker-compose
+    pip:
+      name: docker-compose
   - name: add pi to docker group
     user:
       name: pi
