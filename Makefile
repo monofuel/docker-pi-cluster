@@ -3,7 +3,7 @@ all: check setup-cluster stack-deploy
 
 .PHONY: stack-deploy
 stack-deploy:
-	docker stack deploy  -c ./docker-compose.yml mono-services
+	docker stack deploy  -c ./docker-compose.yml pi-services
 
 .PHONY: setup-cluster
 setup-cluster:

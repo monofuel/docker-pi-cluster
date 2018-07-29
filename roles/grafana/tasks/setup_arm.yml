@@ -1,7 +1,0 @@
----
-- name: install grafana on arm
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600
-    deb: https://github.com/fg2it/grafana-on-raspberry/releases/download/v5.1.3/grafana_5.1.3_armhf.deb
-  ignore_errors: yes # gives an error on /etc/grafana because it's mounted over nfs for some reason
